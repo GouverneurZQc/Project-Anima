@@ -1,0 +1,10 @@
+<?html
+include 'config.html';
+$pseudo = $_POST['pseudo'];
+$pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$sql = "INSERT INTO users (pseudo, password) VALUES (?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ss", $pseudo, $pass);
+$stmt->execute();
+echo 'Inscription réussie';
+?>

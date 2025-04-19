@@ -1,0 +1,47 @@
+<?html
+session_start();
+$is_admin = isset($_SESSION['admin']) && $_SESSION['admin'] === true;
+$pseudo = $_SESSION['pseudo'] ?? ($is_admin ? 'Médecin en Chef' : null);
+$message = trim($_POST['message'] ?? '');
+
+if ($message !== '' && $pseudo) {
+    $conn = new mysqli('localhost', 'root', '', 'project_anima');
+    if (!$conn->connect_error) {
+
+        if (!$is_admin) {
+            $stmt_check = $conn->prepare("SELECT 1 FROM muted_users WHERE pseudo = ?");
+            $stmt_check->bind_param("s", $pseudo);
+            $stmt_check->execute();
+            $stmt_check->store_result();
+            if ($stmt_check->num_rows > 0) {
+                $stmt_check->close();
+                $conn->close();
+                echo "muted";
+                exit;
+            }
+            $stmt_check->close();
+        }
+
+        // CENSURE ICI
+        $badwords = ["merde", "putain", "fuck", "shit", "con", "salope", "connard", "bitch", "asshole", "pussy"];
+        $message = preg_replace_callback(
+            '/' . implode('|', array_map('preg_quote', $badwords)) . '/i',
+            function ($matches) {
+                return str_repeat('*', strlen($matches[0]));
+            },
+            $message
+        );
+
+        $stmt = $conn->prepare("INSERT INTO messages (pseudo, message) VALUES (?, ?)");
+        $stmt->bind_param("ss", $pseudo, $message);
+        $stmt->execute();
+        $stmt->close();
+
+        // Mise à jour de l'activité
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $conn->query("REPLACE INTO active_users (ip_address, last_active) VALUES ('$ip', NOW())");
+
+        $conn->close();
+    }
+}
+?>

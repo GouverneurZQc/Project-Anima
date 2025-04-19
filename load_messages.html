@@ -1,0 +1,32 @@
+<?html
+session_start();
+$conn = new mysqli('localhost', 'root', '', 'project_anima');
+if ($conn->connect_error) exit;
+
+$result = $conn->query("SELECT pseudo, message, created_at FROM messages ORDER BY created_at DESC LIMIT 50");
+
+echo "<style>
+.chat-message {
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #333;
+  padding-bottom: 5px;
+  font-size: 13px;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.admin-name {
+  color: orange;
+}
+</style>";
+
+while ($row = $result->fetch_assoc()) {
+  $date = date("Y-m-d H:i", strtotime($row['created_at']));
+  $pseudo = htmlspecialchars($row['pseudo']);
+  $message = htmlspecialchars($row['message']);
+  $isChief = $pseudo === 'Médecin en Chef';
+
+  echo "<div class='chat-message'><strong class='" . ($isChief ? "admin-name" : "") . "'>[{$date}] {$pseudo}:</strong><br>{$message}</div>";
+}
+$conn->close();
+?>

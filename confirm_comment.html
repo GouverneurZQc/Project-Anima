@@ -1,0 +1,75 @@
+<?html
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../vendor/autoload.html'; // PHPMailer requis via Composer
+
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$dbname = 'project_anima';
+
+$conn = new mysqli($host, $user, $pass, $dbname);
+if ($conn->connect_error) {
+    die('Erreur de connexion : ' . $conn->connect_error);
+}
+
+$token = $_GET['token'] ?? '';
+if (empty($token)) {
+    die('Lien invalide.');
+}
+
+// Récupère le commentaire en attente
+$stmt = $conn->prepare("SELECT email, content FROM pending_comments WHERE token = ?");
+$stmt->bind_param("s", $token);
+$stmt->execute();
+$stmt->store_result();
+
+if ($stmt->num_rows === 0) {
+    die('Token invalide ou commentaire déjà validé.');
+}
+
+$stmt->bind_result($email, $content);
+$stmt->fetch();
+$stmt->close();
+
+// Transfert vers la table finale
+$stmt = $conn->prepare("INSERT INTO comments (email, content, created_at) VALUES (?, ?, NOW())");
+$stmt->bind_param("ss", $email, $content);
+$stmt->execute();
+$stmt->close();
+
+// Supprime de pending
+$stmt = $conn->prepare("DELETE FROM pending_comments WHERE token = ?");
+$stmt->bind_param("s", $token);
+$stmt->execute();
+$stmt->close();
+
+// Envoi d'un email de remerciement
+$mail = new PHPMailer(true);
+try {
+    $mail->isSMTP();
+    $mail->Host       = 'hockeyfan88@hotmail.fr';     // <-- À personnaliser
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'Admin';       // <-- À personnaliser
+    $mail->Password   = 'patate1234';         // <-- À personnaliser
+    $mail->SMTPSecure = 'tls';
+    $mail->Port       = 587;
+
+    $mail->setFrom('noreply@projectanima.com', 'Project Anima');
+    $mail->addAddress($email);
+
+    $mail->isHTML(true);
+    $mail->Subject = 'Merci pour votre commentaire !';
+    $mail->Body    = "<p>Bonjour,</p>
+                      <p>Merci d’avoir partagé votre avis sur <strong>Project Anima</strong> !</p>
+                      <p>Votre soutien nous aide à rendre ce projet encore plus terrifiant et immersif.</p>
+                      <p>Restez à l’affût... des surprises pourraient bientôt tomber dans votre boîte mail 😈</p>
+                      <p>- L’équipe Project Anima</p>";
+    $mail->send();
+} catch (Exception $e) {
+    // On n'affiche pas l'erreur pour éviter d'inquiéter l'utilisateur
+}
+
+echo '<script>alert("Merci ! Votre commentaire a été validé."); window.location.href="../comments.html";</script>';
+?>
