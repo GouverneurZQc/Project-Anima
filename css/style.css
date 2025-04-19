@@ -1,0 +1,4 @@
+body { background-color: #111; color: #f1f1f1; font-family: 'Special Elite', cursive; }
+nav a { margin: 10px; color: #f33; text-decoration: none; }
+.banner { width: 100%; height: auto; }
+main { padding: 20px; }
