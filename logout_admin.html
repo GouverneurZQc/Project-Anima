@@ -1,9 +1,0 @@
-<?html
-session_start();
-unset($_SESSION['admin']);
-$conn = new mysqli('localhost', 'root', '', 'project_anima');
-$conn->query("UPDATE admin_status SET is_online = 0 WHERE id = 1");
-$conn->close();
-header("Location: ../chat.html");
-exit;
-?>
