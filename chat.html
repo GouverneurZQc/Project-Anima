@@ -1,0 +1,104 @@
+<?html session_start(); ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion au Chat Psychiatrique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000;
+      color: #eee;
+      font-family: 'Special Elite', cursive;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header img {
+      width: 100%;
+      max-height: 120px;
+      object-fit: contain;
+    }
+    nav {
+      background-color: #111;
+      padding: 10px 0;
+      text-align: center;
+      width: 100%;
+    }
+    nav a {
+      color: crimson;
+      margin: 0 8px;
+      text-decoration: none;
+      font-family: 'Special Elite', cursive;
+      font-size: 16px;
+      font-weight: bold;
+      display: inline-block;
+    }
+    h1 {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    button {
+      font-family: 'Special Elite', cursive;
+      background-color: crimson;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+    }
+    #admin-form {
+      display: none;
+      margin-top: 10px;
+    }
+    #admin-form input {
+      padding: 10px;
+      margin-right: 10px;
+      font-family: 'Special Elite', cursive;
+    }
+  </style>
+  <script>
+    function showAdminLogin() {
+      document.getElementById('admin-form').style.display = 'block';
+    }
+    function openPatient() {
+      const form = document.getElementById('patient-form');
+      form.target = '_blank';
+      form.submit();
+    }
+    function openAdmin() {
+      const form = document.getElementById('admin-form');
+      form.target = '_blank';
+      form.submit();
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <img src="img/banner.jpg" alt="Bannière du jeu">
+  </header>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="updates.html">Mise à jour</a>
+    <a href="info.html">Information</a>
+    <a href="images.html">Images</a>
+    <a href="video.html">Vidéos</a>
+    <a href="download.html">Télécharger</a>
+    <a href="contact.html">Contact</a>
+    <a href="comments.html">Commentaires</a>
+    <a href="chat.html">Chat</a>
+  </nav>
+
+  <h1>Connexion au Chat Psychiatrique</h1>
+  <form id="patient-form" action="login_patient.html" method="post">
+    <button type="button" onclick="openPatient()">Connexion Patient</button>
+  </form>
+  <button onclick="showAdminLogin()">Connexion Médecin en Chef</button>
+  <form id="admin-form" action="admin_login.html" method="post">
+    <input type="password" name="admin_pass" placeholder="Mot de passe admin" required>
+    <input type="button" value="Se connecter" onclick="openAdmin()">
+  </form>
+</body>
+</html>
