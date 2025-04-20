@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Project Anima - Accueil</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Special Elite', cursive;
+      background: linear-gradient(90deg, #000000 60%, #1a1a1a);
+      color: #eee;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    aside {
+      width: 260px;
+      background-color: #111;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 2px solid crimson;
+    }
+    .banner img {
+      width: 100%;
+      border: 2px solid crimson;
+    }
+    .language-switcher {
+      text-align: center;
+      margin: 10px 0 15px 0;
+    }
+    .language-switcher img {
+      width: 24px;
+    }
+    .logo {
+      text-align: center;
+      font-size: 1.8em;
+      color: crimson;
+      margin: 10px 0 20px 0;
+      animation: flash 2s infinite alternate;
+    }
+    @keyframes flash {
+      from { opacity: 0.6; }
+      to { opacity: 1; text-shadow: 0 0 8px crimson; }
+    }
+    nav a {
+      display: block;
+      padding: 12px;
+      margin: 6px 0;
+      color: #eee;
+      text-decoration: none;
+      border-left: 4px solid transparent;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      background-color: #222;
+      border-left: 4px solid crimson;
+    }
+    .social {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .social a {
+      margin: 0 10px;
+      color: #999;
+      font-size: 20px;
+      transition: 0.3s;
+    }
+    .social a:hover {
+      color: crimson;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px;
+      background: url('https://images.unsplash.com/photo-1633113217211-7df69e9e794b?auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+      background-size: cover;
+      overflow-y: auto;
+    }
+    main h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: crimson;
+      animation: flash 2s infinite alternate;
+    }
+    main p {
+      font-size: 1.1em;
+      max-width: 800px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    footer {
+      width: 100%;
+      text-align: center;
+      background-color: #111;
+      color: #666;
+      font-size: 12px;
+      padding: 8px;
+      position: relative;
+    }
+  
+    .flash {
+      animation: flash 2s infinite alternate;
+    }
+    @keyframes flash {
+      from { opacity: 0.6; }
+      to { opacity: 1; text-shadow: 0 0 8px crimson; }
+    }
+    
+    .flash {
+      animation: flash 2s infinite alternate;
+    }
+    .active {
+      color: crimson !important;
+      font-weight: bold;
+      text-shadow: 0 0 10px crimson;
+    }
+    @keyframes flash {
+      from { opacity: 0.6; }
+      to { opacity: 1; }
+    }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <aside>
+      <div>
+        <div class="banner">
+          <img src="banner.jpg" alt="Bannière Project Anima">
+        </div>
+        <div id="times" style="color: #ccc; font-size: 0.8em; text-align: center; margin-bottom: 15px;"></div>
+<div class="language-switcher">
+          <a href="index.html"><img src="https://flagcdn.com/w40/fr.png" alt="FR" style="margin-right:8px;"></a>
+          <a href="index_en.html"><img src="https://flagcdn.com/w40/gb.png" alt="EN"></a>
+        </div>
+        
+        <nav>
+<a href="video.html" class="flash" style="color: gold; display: block; margin-bottom: 20px;">🎬 Trailer</a>
+
+<style>.flash { animation: flash 2s infinite alternate; }
+    .flash {
+      animation: flash 2s infinite alternate;
+    }
+    .active {
+      color: crimson !important;
+      font-weight: bold;
+      text-shadow: 0 0 10px crimson;
+    }
+    @keyframes flash {
+      from { opacity: 0.6; }
+      to { opacity: 1; }
+    }
+    </style>
+          <a href="index.html" >Accueil</a>
+          <a href="updates.html" class="flash">Mise à jour</a>
+          <a href="info.html" class="flash">Informations</a>
+          <a href="images.html" class="flash">Images</a>
+          <a href="video.html" class="flash">Vidéos</a>
+          <a href="download.html" class="flash">Téléchargement</a>
+<a href="faq.html" class="flash">F.A.Q</a>
+          <a href="community.html" class="flash">Community</a>
+          <a href="donations.html" class="flash">Donations</a>
+        </nav>
+      </div>
+      <div class="social">
+        <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+        <a href="https://store.steampowered.com" target="_blank"><i class="fab fa-steam"></i></a>
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+<a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+      </div>
+    </aside>
+    
+<main>
+  <h1 class="flash" style="margin-bottom: 30px;">⬇️ Télécharger la Démo</h1>
+
+  <div style="max-width: 800px; margin: auto; text-align: center; background-color: #111; border: 1px solid #333; padding: 30px; border-radius: 6px; box-shadow: 2px 2px 12px #000;">
+    <p>Appuyez sur le bouton ci-dessous pour télécharger la démo de <strong>Project Anima</strong>.</p>
+    <a href="https://example.com/telecharger_demo.zip" download style="display: inline-block; padding: 14px 28px; background-color: crimson; color: white; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 20px;">Télécharger la démo</a>
+        <p style="margin-top: 10px; font-size: 0.9em; color: #aaa;">🖥️ Version PC uniquement</p>
+  </div>
+
+  <div id="times" style="margin-top: 40px; font-size: 0.9em; color: #ccc;"></div>
+  <div style="margin-top: 40px; font-size: 0.85em; color: #aaa;">2025 / Project Anima</div>
+</main>
+  
+  </div>
+  <footer style="display:none">
+    2025 copyright of Project Anima
+  </footer>
+
+    <script>
+      function updateClocks() {
+        const usTime = new Date().toLocaleString("en-US", { timeZone: "America/New_York", hour: '2-digit', minute: '2-digit' });
+        const euTime = new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris", hour: '2-digit', minute: '2-digit' });
+        document.getElementById("times").innerHTML = "🕒 Heure US : " + usTime + " | Heure Europe : " + euTime;
+      }
+      updateClocks();
+      setInterval(updateClocks, 60000);
+    </script>
+  </body>
+</html>
+
+</html>
