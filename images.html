@@ -136,6 +136,28 @@
       to { opacity: 1; }
     }
     </style>
+
+<style>
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+    user-select: none;
+    z-index: 10001;
+  }
+  .lightbox-arrow.left {
+    left: 20px;
+  }
+  .lightbox-arrow.right {
+    right: 20px;
+  }
+</style>
+
 </head>
 <body>
   <div class="container">
@@ -167,6 +189,28 @@
       to { opacity: 1; }
     }
     </style>
+
+<style>
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+    user-select: none;
+    z-index: 10001;
+  }
+  .lightbox-arrow.left {
+    left: 20px;
+  }
+  .lightbox-arrow.right {
+    right: 20px;
+  }
+</style>
+
           <a href="index.html" >Accueil</a>
           <a href="updates.html" class="flash">Mise à jour</a>
           <a href="info.html" class="flash">Informations</a>
@@ -190,12 +234,12 @@
 <main>
   <h1 class="flash" style="margin-bottom: 30px;">🖼️ Galerie d'images</h1>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
-    <div style="text-align: center;"><img src="img/image1.jpg" alt="Image 1" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
-    <div style="text-align: center;"><img src="img/image2.jpg" alt="Image 2" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
-    <div style="text-align: center;"><img src="img/image3.jpg" alt="Image 3" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
-    <div style="text-align: center;"><img src="img/image4.jpg" alt="Image 4" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
-    <div style="text-align: center;"><img src="img/image5.jpg" alt="Image 5" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
-    <div style="text-align: center;"><img src="img/image6.jpg" alt="Image 6" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
+    <div style="text-align: center;"><img src="img/image1.jpg" alt="Image 1" class="gallery-image" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
+    <div style="text-align: center;"><img src="img/image2.jpg" alt="Image 2" class="gallery-image" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
+    <div style="text-align: center;"><img src="img/image3.jpg" alt="Image 3" class="gallery-image" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
+    <div style="text-align: center;"><img src="img/image4.jpg" alt="Image 4" class="gallery-image" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
+    <div style="text-align: center;"><img src="img/image5.jpg" alt="Image 5" class="gallery-image" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
+    <div style="text-align: center;"><img src="img/image6.jpg" alt="Image 6" class="gallery-image" style="width: 100%; border-radius: 6px; box-shadow: 0 0 8px #000;"></div>
   </div>
   <div id="times" style="margin-top: 40px; font-size: 0.9em; color: #ccc;"></div>
   <div style="margin-top: 40px; font-size: 0.85em; color: #aaa;">2025 / Project Anima</div>
@@ -207,16 +251,194 @@
     2025 copyright of Project Anima
   </footer>
 
-    <script>
-      function updateClocks() {
-        const usTime = new Date().toLocaleString("en-US", { timeZone: "America/New_York", hour: '2-digit', minute: '2-digit' });
-        const euTime = new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris", hour: '2-digit', minute: '2-digit' });
-        document.getElementById("times").innerHTML = "🕒 Heure US : " + usTime + " | Heure Europe : " + euTime;
+    
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const images = document.querySelectorAll(".gallery-image");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const closeBtn = document.querySelector(".lightbox-close");
+    const leftArrow = document.querySelector(".lightbox-arrow.left");
+    const rightArrow = document.querySelector(".lightbox-arrow.right");
+
+    let currentIndex = 0;
+
+    function showImage(index) {
+      if (index >= 0 && index < images.length) {
+        lightboxImg.src = images[index].src;
+        currentIndex = index;
+        lightbox.style.display = "flex"; closeBtn.style.display = "block";
+        document.body.style.overflow = "hidden";
       }
-      updateClocks();
-      setInterval(updateClocks, 60000);
-    </script>
-  </body>
+    }
+
+    function closeLightbox() {
+      lightbox.style.display = "none"; closeBtn.style.display = "none";
+      lightboxImg.src = "";
+      document.body.style.overflow = "auto";
+    }
+
+    images.forEach((img, i) => {
+      img.addEventListener("click", function () {
+        showImage(i);
+      });
+    });
+
+    lightbox.addEventListener("click", function (e) {
+      if (e.target === lightbox || e.target === closeBtn) {
+        closeLightbox();
+      }
+    });
+
+    leftArrow.addEventListener("click", function (e) {
+      e.stopPropagation();
+      showImage((currentIndex - 1 + images.length) % images.length);
+    });
+
+    rightArrow.addEventListener("click", function (e) {
+      e.stopPropagation();
+      showImage((currentIndex + 1) % images.length);
+    });
+
+    // Ajout d'une sécurité clavier (ESC)
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeLightbox();
+      }
+    });
+  });
+</script>
+
+
+</script>
+  
+
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-arrow left">&#10094;</span>
+  <img id="lightbox-img" src="" alt="Preview">
+  <span class="lightbox-arrow right">&#10095;</span>
+  <a href="#" class="lightbox-close" style="display:none;">&times;</a>
+</div>
+
+  <img id="lightbox-img" src="" alt="Preview">
+  <a href="#" class="lightbox-close" style="display:none;">&times;</a>
+</div>
+
+
+<style>
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+  }
+  .lightbox img {
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #000;
+  }
+  .lightbox:target {
+    display: flex;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+</style>
+
+<style>
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+    user-select: none;
+    z-index: 10001;
+  }
+  .lightbox-arrow.left {
+    left: 20px;
+  }
+  .lightbox-arrow.right {
+    right: 20px;
+  }
+</style>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const images = document.querySelectorAll(".gallery-image");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const closeBtn = document.querySelector(".lightbox-close");
+    const leftArrow = document.querySelector(".lightbox-arrow.left");
+    const rightArrow = document.querySelector(".lightbox-arrow.right");
+
+    let currentIndex = 0;
+
+    function showImage(index) {
+      if (index >= 0 && index < images.length) {
+        lightboxImg.src = images[index].src;
+        currentIndex = index;
+        lightbox.style.display = "flex"; closeBtn.style.display = "block";
+        document.body.style.overflow = "hidden";
+      }
+    }
+
+    function closeLightbox() {
+      lightbox.style.display = "none"; closeBtn.style.display = "none";
+      lightboxImg.src = "";
+      document.body.style.overflow = "auto";
+    }
+
+    images.forEach((img, i) => {
+      img.addEventListener("click", function () {
+        showImage(i);
+      });
+    });
+
+    lightbox.addEventListener("click", function (e) {
+      if (e.target === lightbox || e.target === closeBtn) {
+        closeLightbox();
+      }
+    });
+
+    leftArrow.addEventListener("click", function (e) {
+      e.stopPropagation();
+      showImage((currentIndex - 1 + images.length) % images.length);
+    });
+
+    rightArrow.addEventListener("click", function (e) {
+      e.stopPropagation();
+      showImage((currentIndex + 1) % images.length);
+    });
+
+    // Ajout d'une sécurité clavier (ESC)
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeLightbox();
+      }
+    });
+  });
+</script>
+
+
+</script>
+
+</body>
 </html>
 
 </html>
